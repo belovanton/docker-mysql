@@ -95,6 +95,8 @@ if [ "$1" = 'mysqld' ]; then
 	chown -R mysql:mysql "$DATADIR"
 fi
 
+cp /var/lib/mysql/my.cnf /etc/mysql/my.cnf
+
 mysql -u$REP_USER -p$REP_PASS -e "USE $REP_DBNAME; FLUSH TABLES WITH READ LOCK" >> /var/lib/mysql/start_replication.log;
 mysql -u$REP_USER -p$REP_PASS -e "SHOW MASTER STATUS" >> /var/lib/mysql/start_replication.log;
 mysqldump -u$REP_USER -p$REP_PASS $REP_DBNAME |gzip > /var/lib/mysql/dump.sql.gz
